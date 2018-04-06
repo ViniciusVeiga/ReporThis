@@ -9,7 +9,10 @@ module.exports = () => {
             console.log(err);
             return null;
         }
-        return users;
+        if(!users) {
+            return [];
+        }
+        return users ? users : [];
     };
 
     const setUsers = async (database, users) => {
