@@ -54,16 +54,16 @@ module.exports = () => {
         if(users) {
             users.forEach(e => {
                 if(e.ID == user.ID) {
-                    if(user.EMAIL) {
+                    if(user.EMAIL || typeof user.EMAIL === 'string') {
                         e.EMAIL = user.EMAIL;
                     }
-                    if(user.NAME) {
+                    if(user.NAME || typeof user.EMAIL === 'string') {
                         e.NAME = user.NAME;
                     }
-                    if(user.REGISTRY) {
+                    if(user.REGISTRY || typeof user.EMAIL === 'string') {
                         e.REGISTRY = user.REGISTRY;
                     }
-                    if(user.PASSWORD) {
+                    if(user.PASSWORD || typeof user.EMAIL === 'string') {
                         e.PASSWORD = user.PASSWORD;
                     }
                     flag = true;
@@ -82,7 +82,7 @@ module.exports = () => {
         let i = -1, aux1, aux2, users = await getUsers(database);
         if(users) {
             users.forEach((e, j) => {
-                if(e.ID === userInfo.ID) {
+                if(e.ID == userInfo.ID) {
                     i = j;
                     return;
                 }
