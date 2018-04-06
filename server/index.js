@@ -18,11 +18,15 @@ module.exports = () => {
         server.set('viewDir', config.viewDir);
         server.set('database', config.database);
         
-        // server.use(express.static(`${__dirname}/../public`));
+        server.use(express.static(`${__dirname}/../public`));
         server.use(bodyParser.json());
         // server.use(multer({ dest: '/tmp/'}));
+
+        server.get('/', (req, res) => {
+            res.sendFile(path.resolve(`${__dirname}/../../public/index.html`));
+        });
         
-        routes(server);
+        server.use('/api', routes(server));
     };
 
     const start = () => {
