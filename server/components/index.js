@@ -1,12 +1,13 @@
 'use strict';
 
 const 
+    express = require('express'),
     path = require('path');
 
 module.exports = server => {
-    server.get('/', (req, res) => {
-        res.sendFile(path.resolve(`${__dirname}/../../public/index.html`));
-    });
+    const router = express.Router();
 
-    require('./users/usersController')(server);
+    router.use(require('./users/usersController')(server));
+
+    return router;
 }
