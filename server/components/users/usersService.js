@@ -57,13 +57,13 @@ module.exports = () => {
                     if(user.EMAIL || typeof user.EMAIL === 'string') {
                         e.EMAIL = user.EMAIL;
                     }
-                    if(user.NAME || typeof user.EMAIL === 'string') {
+                    if(user.NAME || typeof user.NAME === 'string') {
                         e.NAME = user.NAME;
                     }
-                    if(user.REGISTRY || typeof user.EMAIL === 'string') {
+                    if(user.REGISTRY || typeof user.REGISTRY === 'string') {
                         e.REGISTRY = user.REGISTRY;
                     }
-                    if(user.PASSWORD || typeof user.EMAIL === 'string') {
+                    if(user.PASSWORD || typeof user.PASSWORD === 'string') {
                         e.PASSWORD = user.PASSWORD;
                     }
                     flag = true;
