@@ -3,8 +3,10 @@
 const 
     express = require('express'),
     bodyParser = require('body-parser'),
-    routes = require('./components');
+    multer  = require('multer');
         
+const
+    routes = require('./components');
 
 module.exports = () => {
     const server = express();
@@ -16,11 +18,9 @@ module.exports = () => {
         server.set('viewDir', config.viewDir);
         server.set('database', config.database);
         
+        // server.use(express.static(`${__dirname}/../public`));
         server.use(bodyParser.json());
-
-        server.get('/', (req, res) => {
-            res.redirect('/home');
-        });    
+        // server.use(multer({ dest: '/tmp/'}));
         
         routes(server);
     };

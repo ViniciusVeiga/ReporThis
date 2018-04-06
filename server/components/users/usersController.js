@@ -3,72 +3,54 @@
 const service = require('./usersService')();
 
 module.exports = server => {
-    /*
-    Retorna array de usuários:
-    [
-        {
-            ID,
-            EMAIL,
-            NAME,
-            REGISTRY,
-            PASSWORD
+    
+    server.get('/users', async (req, res) => {
+        let users = await service.getUsers(server.settings.database);
+        if(users) {
+            res.status(200).json(users);
         }
-    ]
-    */
-    server.get('/users', (req, res) => {
-        res.status(200).json(service.getUsers(server.settings.database));
+        else {
+            res.status(406).end();
+        }
     });
-    /*
-    Recebe ou ID, ou REGISTRY, ou EMAIL ou NAME
-    Retorna usuário:
-    {
-        ID,
-        EMAIL,
-        NAME,
-        REGISTRY,
-        PASSWORD
-    }
-    */
-    server.get('/user', (req, res) => {
-        res.status(200).json({ ok: true });
+    
+    server.get('/user/:id', async (req, res) => {
+        let user = await service.getUser(req.params.id, server.settings.database);
+        if(user) {
+            res.status(200).json(user);
+        }
+        else {
+            res.status(406).end();
+        }
     });
-    /*
-    RECEBE:
-    {
-        email,
-        name,
-        registry,
-        password
-    }
-    RETORNA INFO DO USUÁRIO CRIADO:
-    {
-        ID,
-        EMAIL,
-        NAME,
-        REGISTRY,
-        PASSWORD
-    }
-    */
-    server.post('/user', (req, res) => {
-        res.status(200).json(service.createUser(req.body, server.settings.database));
+    
+    server.post('/user', async (req, res) => {
+        let user = await service.createUser(req.body, server.settings.database);
+        if(user) {
+            res.status(200).json(user);
+        }
+        else {
+            res.status(406).end();
+        }
     });
-    /*
-    RECEBE: (só os campos que forem editados, caso um campo não for mudar, basta não incluir ele)
-    * ID não se altera, porém é obrigatório para identificar o usuário
-    {
-        id,
-        email,
-        name,
-        registry,
-        password
-    }
-    RETORNA objeto com status da operação
-    */
-    server.patch('/user', (req, res) => {
-        res.status(200).json(service.editUser(req.body, server.settings.database));
+    
+    server.put('/user', async (req, res) => {
+        let user = await service.editUser(req.body, server.settings.database);
+        if(user) {
+            res.status(200).json(user);
+        }
+        else {
+            res.status(406).end();
+        }
     });
 
-    server.delete('/user', (req, res) => {
-        res.status(200).json({ ok: true });
+    server.delete('/user', async (req, res) => {
+        let user = await service.deleteUser(req.body, server.settings.database);
+        if(user) {
+            res.status(200).json(user);
+        }
+        else {
+            res.status(406).end();
+        }
     });
 };
