@@ -1,6 +1,6 @@
 {
     "users": [],
-    "categorys": [],
+    "categories": [],
     "comments": [],
     "file_comments": [],
     "file_reports": [],
@@ -8,5 +8,5 @@
     "locations": [],
     "moderators": [],
     "reports": [],
-    "statuss": []
+    "statuses": []
 }

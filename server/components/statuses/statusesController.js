@@ -2,15 +2,15 @@
 
 const
 	express = require('express'),
-	service = require('./statussService')();
+	service = require('./statusesService')();
 
 module.exports = server => {
 	let router = express.Router();
 
-	router.get('/statuss', async (req, res) => {
-		let statuss = await service.getStatuss(server.settings.database);
-		if(statuss) {
-			res.status(200).json(statuss);
+	router.get('/statuses', async (req, res) => {
+		let statuses = await service.getStatuses(server.settings.database);
+		if(statuses) {
+			res.status(200).json(statuses);
 		}
 		else {
 			res.status(406).end();

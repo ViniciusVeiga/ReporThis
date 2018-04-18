@@ -1,22 +1,22 @@
 'use strict';
 
 module.exports = () => {
-	const getStatuss = async database => {
-		let statuss = [];
+	const getStatuses = async database => {
+		let statuses = [];
 		try {
-			statuss = JSON.parse(await database.read()).statuss;
+			statuses = JSON.parse(await database.read()).statuses;
 		} catch(err) {
 			console.log(err);
 			return null;
 		}
-		return statuss ? statuss : [];
+		return statuses ? statuses : [];
 	};
 
-	const setStatuss = async (database, statuss) => {
+	const setStatuses = async (database, statuses) => {
 		let data = {}, status = {};
 		try {
 			data = JSON.parse(await database.read());
-			data.statuss = statuss;
+			data.statuses = statuses;
 			await database.write(JSON.stringify(data));
 		} catch(err) {
 			console.log(err);
@@ -26,7 +26,7 @@ module.exports = () => {
 	};
 	
 	return {
-		getStatuss,
-		setStatuss
+		getStatuses,
+		setStatuses
 	};
 }

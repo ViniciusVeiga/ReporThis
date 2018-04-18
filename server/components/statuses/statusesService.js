@@ -1,11 +1,11 @@
 'use strict';
 
-const model = require('./statussModel')();
+const model = require('./statusesModel')();
 
 module.exports = () => {
-	const isValidId = (statuss, id) => {
+	const isValidId = (statuses, id) => {
 		let isValidId = true;
-		statuss.forEach(e => {
+		statuses.forEach(e => {
 			if (e.ID == id) {
 				isValidId = false;
 			}
@@ -13,14 +13,14 @@ module.exports = () => {
 		return isValidId;
 	}
 
-	const getStatuss = async database => {
-		return await model.getStatuss(database);
+	const getStatuses = async database => {
+		return await model.getStatuses(database);
 	};
 
 	const getStatus = async (id, database) => {
-		let status = {}, statuss = await model.getStatuss(database);
-		if(statuss) {
-			statuss.forEach(e => {
+		let status = {}, statuses = await model.getStatuses(database);
+		if(statuses) {
+			statuses.forEach(e => {
 				if(e.ID == id) {
 					status = e;
 					return;
@@ -34,31 +34,31 @@ module.exports = () => {
 	};
 
 	const createStatus = async (status, database) => {
-		let i = 1, statuss = await getStatuss(database);
+		let i = 1, statuses = await getStatuses(database);
 
-		while(!isValidId(statuss, statuss.length + i)) {
+		while(!isValidId(statuses, statuses.length + i)) {
 			i--;
 		}
-		status.ID = statuss.length + i;
-		statuss.push(status);
+		status.ID = statuses.length + i;
+		statuses.push(status);
 
-		if(await model.setStatuss(database, statuss)) {
-			return statuss[statuss.length-1];
+		if(await model.setStatuses(database, statuses)) {
+			return statuses[statuses.length-1];
 		}
 		return null;
 	};
 
 	const editStatus = async (status, database) => {
-		let flag = false, statuss = await getStatuss(database);
+		let flag = false, statuses = await getStatuses(database);
 
-		if(statuss) {
-			statuss.forEach(e => {
+		if(statuses) {
+			statuses.forEach(e => {
 				if(e.ID == status.ID) {
 					if(status.NAME  || typeof status.NAME === 'string') {
 						e.NAME = status.NAME;
 					}
 					flag = true;
-					model.setStatuss(database, statuss);
+					model.setStatuses(database, statuses);
 				}
 			});
 		}
@@ -70,29 +70,29 @@ module.exports = () => {
 	};
 
 	const deleteStatus = async (statusInfo, database) => {
-		let i = -1, aux1, aux2, statuss = await getStatuss(database);
-		if(statuss) {
-			statuss.forEach((e, j) => {
+		let i = -1, aux1, aux2, statuses = await getStatuses(database);
+		if(statuses) {
+			statuses.forEach((e, j) => {
 				if(e.ID == statusInfo.ID) {
 					i = j;
 					return;
 				}
 			});
 			if(i !== -1) {
-				aux1 = statuss.splice(i);
+				aux1 = statuses.splice(i);
 				aux2 = aux1.splice(1);
-				statuss = statuss.concat(aux2);
-				statuss = await model.setStatuss(database, statuss);
+				statuses = statuses.concat(aux2);
+				statuses = await model.setStatuses(database, statuses);
 			}
 			else {
-				statuss = null;
+				statuses = null;
 			}
 		}
-		return statuss;
+		return statuses;
 	};
 
 	return {
-		getStatuss,
+		getStatuses,
 		getStatus,
 		createStatus,
 		editStatus,

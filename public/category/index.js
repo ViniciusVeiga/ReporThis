@@ -1,6 +1,6 @@
 'use strict';
 
-let categorys = [];
+let categories = [];
 let status = {};
 let list;
 
@@ -18,7 +18,7 @@ const create = () => {
 				ID: result.ID,
 				listing: true
 			};
-			getCategorys();
+			getCategories();
 		}
 	});
 }
@@ -38,7 +38,7 @@ const edit = id => {
 		},
 		success: result => {
 			status[id].listing = true;
-			getCategorys();
+			getCategories();
 		}
 	})
 };
@@ -57,19 +57,19 @@ const deleteCategory = id => {
 			ID: id
 		},
 		success: result => {
-			getCategorys();
+			getCategories();
 		}
 	});
 };
 
-const getCategorys = resetStatus => {
+const getCategories = resetStatus => {
 	$.ajax({
-		url: '/api/categorys',
+		url: '/api/categories',
 		type: 'GET',
 		success: result => {
-			categorys = result;
+			categories = result;
 			if(resetStatus) {
-				categorys.forEach(e => {
+				categories.forEach(e => {
 					status[e.ID] = {
 						ID: e.ID,
 						listing: true
@@ -81,9 +81,9 @@ const getCategorys = resetStatus => {
 	});
 };
 
-const buildTr = categorys => {
+const buildTr = categories => {
 	let trs = '';
-	categorys.forEach(e => {
+	categories.forEach(e => {
 		if(status[e.ID].listing) {
 			trs += `
 				<tr>
@@ -124,11 +124,11 @@ const refreshList = () => {
 			<th>Edit</th>
 			<th>Delete</th>
 		</tr>
-		${buildTr(categorys)}
+		${buildTr(categories)}
 	`);
 }
 
 const init = () => {
 	list = $("#list");
-	getCategorys(true);
+	getCategories(true);
 }

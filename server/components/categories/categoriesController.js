@@ -2,15 +2,15 @@
 
 const
 	express = require('express'),
-	service = require('./categorysService')();
+	service = require('./categoriesService')();
 
 module.exports = server => {
 	let router = express.Router();
 
-	router.get('/categorys', async (req, res) => {
-		let categorys = await service.getCategorys(server.settings.database);
-		if(categorys) {
-			res.status(200).json(categorys);
+	router.get('/categories', async (req, res) => {
+		let categories = await service.getCategories(server.settings.database);
+		if(categories) {
+			res.status(200).json(categories);
 		}
 		else {
 			res.status(406).end();

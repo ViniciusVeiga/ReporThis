@@ -1,11 +1,11 @@
 'use strict';
 
-const model = require('./categorysModel')();
+const model = require('./categoriesModel')();
 
 module.exports = () => {
-	const isValidId = (categorys, id) => {
+	const isValidId = (categories, id) => {
 		let isValidId = true;
-		categorys.forEach(e => {
+		categories.forEach(e => {
 			if (e.ID == id) {
 				isValidId = false;
 			}
@@ -13,14 +13,14 @@ module.exports = () => {
 		return isValidId;
 	}
 
-	const getCategorys = async database => {
-		return await model.getCategorys(database);
+	const getCategories = async database => {
+		return await model.getCategories(database);
 	};
 
 	const getCategory = async (id, database) => {
-		let category = {}, categorys = await model.getCategorys(database);
-		if(categorys) {
-			categorys.forEach(e => {
+		let category = {}, categories = await model.getCategories(database);
+		if(categories) {
+			categories.forEach(e => {
 				if(e.ID == id) {
 					category = e;
 					return;
@@ -34,31 +34,31 @@ module.exports = () => {
 	};
 
 	const createCategory = async (category, database) => {
-		let i = 1, categorys = await getCategorys(database);
+		let i = 1, categories = await getCategories(database);
 
-		while(!isValidId(categorys, categorys.length + i)) {
+		while(!isValidId(categories, categories.length + i)) {
 			i--;
 		}
-		category.ID = categorys.length + i;
-		categorys.push(category);
+		category.ID = categories.length + i;
+		categories.push(category);
 
-		if(await model.setCategorys(database, categorys)) {
-			return categorys[categorys.length-1];
+		if(await model.setCategories(database, categories)) {
+			return categories[categories.length-1];
 		}
 		return null;
 	};
 
 	const editCategory = async (category, database) => {
-		let flag = false, categorys = await getCategorys(database);
+		let flag = false, categories = await getCategories(database);
 
-		if(categorys) {
-			categorys.forEach(e => {
+		if(categories) {
+			categories.forEach(e => {
 				if(e.ID == category.ID) {
 					if(category.NAME  || typeof category.NAME === 'string') {
 						e.NAME = category.NAME;
 					}
 					flag = true;
-					model.setCategorys(database, categorys);
+					model.setCategories(database, categories);
 				}
 			});
 		}
@@ -70,29 +70,29 @@ module.exports = () => {
 	};
 
 	const deleteCategory = async (categoryInfo, database) => {
-		let i = -1, aux1, aux2, categorys = await getCategorys(database);
-		if(categorys) {
-			categorys.forEach((e, j) => {
+		let i = -1, aux1, aux2, categories = await getCategories(database);
+		if(categories) {
+			categories.forEach((e, j) => {
 				if(e.ID == categoryInfo.ID) {
 					i = j;
 					return;
 				}
 			});
 			if(i !== -1) {
-				aux1 = categorys.splice(i);
+				aux1 = categories.splice(i);
 				aux2 = aux1.splice(1);
-				categorys = categorys.concat(aux2);
-				categorys = await model.setCategorys(database, categorys);
+				categories = categories.concat(aux2);
+				categories = await model.setCategories(database, categories);
 			}
 			else {
-				categorys = null;
+				categories = null;
 			}
 		}
-		return categorys;
+		return categories;
 	};
 
 	return {
-		getCategorys,
+		getCategories,
 		getCategory,
 		createCategory,
 		editCategory,

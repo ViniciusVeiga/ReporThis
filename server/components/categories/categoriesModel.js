@@ -1,22 +1,22 @@
 'use strict';
 
 module.exports = () => {
-	const getCategorys = async database => {
-		let categorys = [];
+	const getCategories = async database => {
+		let categories = [];
 		try {
-			categorys = JSON.parse(await database.read()).categorys;
+			categories = JSON.parse(await database.read()).categories;
 		} catch(err) {
 			console.log(err);
 			return null;
 		}
-		return categorys ? categorys : [];
+		return categories ? categories : [];
 	};
 
-	const setCategorys = async (database, categorys) => {
+	const setCategories = async (database, categories) => {
 		let data = {}, category = {};
 		try {
 			data = JSON.parse(await database.read());
-			data.categorys = categorys;
+			data.categories = categories;
 			await database.write(JSON.stringify(data));
 		} catch(err) {
 			console.log(err);
@@ -26,7 +26,7 @@ module.exports = () => {
 	};
 	
 	return {
-		getCategorys,
-		setCategorys
+		getCategories,
+		setCategories
 	};
 }
