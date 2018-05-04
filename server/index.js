@@ -1,46 +1,15 @@
-'use strict';
+const express = require('express');
 
-const 
-    express = require('express'),
-    bodyParser = require('body-parser'),
-    multer  = require('multer');
-        
-const
-    routes = require('./components');
+const user = require('./user');
 
-module.exports = () => {
-    const server = express();
+module.exports = (app, dirname) => {
+    const { Router } = express;
+    const router = Router();
+    const port = process.env.PORT || 3000;
 
-    const create = config => {
-        server.set('env', config.env);
-        server.set('port', config.port);
-        server.set('hostname', config.hostname);
-        server.set('viewDir', config.viewDir);
-        server.set('database', config.database);
-        
-        server.use(express.static(`${__dirname}/../public`));
-        server.use(bodyParser.json());
-        server.use(bodyParser.urlencoded({ extended: true }));
-        // server.use(multer({ dest: '/tmp/'}));
+    router.use('/user', user(Router));
 
-        server.get('/', (req, res) => {
-            res.sendFile(path.resolve(`${__dirname}/../../public/index.html`));
-        });
-        
-        server.use('/api', routes(server));
-    };
+    app.use('/api', router);
 
-    const start = () => {
-        let hostname = server.get('hostname'),
-            port = server.get('port');
-
-        server.listen(port, function () {
-            console.log('Express server listening on - http://' + hostname + ':' + port);
-        });
-    }
-
-    return {
-        create: create,
-        start: start
-    }
-}
+    app.listen(port, () => logger.info(`Server listen on ${port}`));
+};
