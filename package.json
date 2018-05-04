@@ -4,6 +4,7 @@
   "description": "Reporthis is an application to register reports about things you thing ain't right",
   "main": "app.js",
   "scripts": {
+    "start": "node app",
     "dev": "nodemon --ignore './database/data.json' --ignore './public' app.js"
   },
   "repository": {
