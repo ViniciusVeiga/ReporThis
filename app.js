@@ -1,8 +1,7 @@
-'use strict';
+const express = require('express');
+const server = require('./server');
+const app = express();
 
-const
-    server = require('./server')(),
-    config = require('./config');
+server(app);
 
-server.create(config);
-server.start();
+module.exports = app;
