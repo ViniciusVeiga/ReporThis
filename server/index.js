@@ -11,5 +11,5 @@ module.exports = (app, dirname) => {
 
     app.use('/api', router);
 
-    app.listen(port, () => logger.info(`Server listen on ${port}`));
+    app.listen(port, () => console.log(`Server listen on ${port}`));
 };
