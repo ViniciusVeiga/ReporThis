@@ -12,7 +12,12 @@ module.exports = (app, dirname) => {
         req.connection = await db({
             connectionString: process.env.DATABASE_URL,
         });
-        next();
+        if(req.connection._connected) {
+            next();
+        }
+        else {
+            res.send(500).end();
+        }
     });
 
     router.use('/user', user(Router));
