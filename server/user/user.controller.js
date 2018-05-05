@@ -37,6 +37,7 @@ const byEmail = async (req, res) => {
 }
 
 const create = async (req, res) => {
+    console.log('body', req.body);
     const user = req.body;
     const schema = {
         properties: {
