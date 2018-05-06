@@ -13,4 +13,4 @@ Then, you will need to create a file name ".env" in the root folder, containing:
 SALT="a random string to generate Hash for your user's passwords"
 DATABASE_URL="Your database connect URI, if your database is hosted by Heroku, add '?ssl=true' to the end of the URI"
 
-Then, just open your terminal and type "npm run dev" to run the application in dev mode, or "node app" to run the application.
+Then, just open your terminal and type "npm install", wait the npm install all dependecies and type "npm run dev" to run the application in dev mode, or "node app" to run the application.
