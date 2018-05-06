@@ -1,7 +1,7 @@
 const getUsers = async connection => {
     const query = `SELECT * FROM REPORTHIS.USER`;
     try {
-        return await connection.query(query);
+        return (await connection.query(query)).rows;
     } catch(error) {
         console.log(error);
     }
@@ -13,9 +13,10 @@ const byEmail = async (email, connection) => {
         values: [email],
     }
     try {
-        return (await connection.query(query))[0];
+        return (await connection.query(query)).rows[0];
     } catch(error) {
         console.log(error);
+        return -1;
     }
 }
 
@@ -27,9 +28,13 @@ const create = async (user, connection) => {
         values: [email, name, password, registry],
     };
     try {
-        return (await connection.query(query))[0];
+        return (await connection.query(query)).rows[0];
     } catch(error) {
         console.log(error);
+        if(error.routine === '_bt_check_unique') {
+            return -23505;
+        }
+        return -1;
     }
 }
 

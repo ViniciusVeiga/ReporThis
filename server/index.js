@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('../database');
+const bodyParser = require('body-parser');
 
 const user = require('./user');
 
@@ -7,6 +8,9 @@ module.exports = (app, dirname) => {
     const { Router } = express;
     const router = Router();
     const port = process.env.PORT || 3000;
+
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
 
     app.use(async (req, res, next) => {
         req.connection = await db({

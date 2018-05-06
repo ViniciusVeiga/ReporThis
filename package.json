@@ -19,6 +19,7 @@
   "homepage": "https://github.com/lucasaferrlopes/Reporthis#readme",
   "dependencies": {
     "ajv": "^6.4.0",
+    "body-parser": "^1.18.2",
     "crypto": "^1.0.1",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
