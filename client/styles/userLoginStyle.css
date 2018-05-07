@@ -1,0 +1,103 @@
+
+body {
+	background-color: #2f3136 !important;
+}
+.login-form{
+    background-color: #202225;
+    font-family: 'Signika';
+    color: #b4b5b6;
+    font-size: 13px;
+}
+    .login-form .center{
+        padding-right: 40px;
+        padding-left: 40px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+    .login-form .foot{
+        padding-right: 90px;
+        padding-left: 90px;
+    }
+
+.input-form{
+        color:#b4b5b6;
+        background-color:#484b51;
+        padding: 5px 10px 5px;
+        border-radius: 8px;
+        border-width: 0px;
+        margin-bottom:10px;
+}
+
+h1{
+    font-family: 'Signika';
+    font-weight: bold;
+    margin-bottom: 35px;
+    margin-top: 100px;
+    text-align: center;
+    color:#dab272;
+}
+.no-border{
+    border-width: 0px;
+}
+
+.btn-login{
+    font-weight: bold;
+    font-family: 'Signika';
+    text-transform: uppercase;
+    color:#b4b5b6;
+    font-size: 15px;
+    border-radius: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: #2f3136;
+}
+.btn-login:hover{
+    background: #dab272;
+    color:#f8f9f6;
+}
+
+.btn-normal{
+    font-weight: bold;
+    font-family: 'Signika';
+    text-transform: uppercase;
+    color:#b4b5b6;
+    font-size: 13px;
+    background: transparent;
+    padding: 0px 0px;
+}
+.btn-normal:hover{
+    color:#f8f9f6;
+}
+.bold-font{
+    font-weight: bold;
+}
+.normal-font{
+    font-weight: normal;
+}
+.margin-{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    color: #7e8084;
+    font-family: 'Signika';
+    
+  }
+  
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #7e8084;
+    font-family: 'Signika';
+  }
+  
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #7e8084;
+    font-family: 'Signika';
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #7e8084;
+    font-family: 'Signika';
+  }
+

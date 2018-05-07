@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="../styles/userLoginStyle.css">
+    <link rel="stylesheet" type="text/css" href="../styles/modal.css">
+    <link href='https://fonts.googleapis.com/css?family=Signika'  rel='stylesheet'>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9"
+        crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <title>ReporThis</title>
+</head>
+
+
+<body>
+    <div id="app" class="">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <h1>ReporThis</h1>
+            <div class="login-form">
+                <div class="center">
+                    <i class="fas fa-envelope" style="padding-right: 5px"></i>
+                    <label for="" class="">EMAIL</label>
+                    <input type="email" v-model='usuario.email' class="btn-block input-form" placeholder="Digite seu email">
+                    <i class="fas fa-unlock" style="padding-right: 5px"></i>
+                    <label for="" class="">SENHA</label>
+                    <input type="password" v-model='usuario.senha' class="btn-block input-form" placeholder="Digite sua senha">
+                </div>
+                <div class="foot">
+                    <button class=" btn-block btn-login no-border" @click="login()">Entrar</button>
+                </div>
+                <form class="center">
+                    <button type="button" class="btn-normal no-border" data-toggle='modal' data-target='#exampleModalCenter'>CADASTRAR-SE</button>
+                    <label class="bold-font margin-">-</label>
+                    <button class="btn-normal no-border">ESQUECI MINHA SENHA</button>
+                </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-x no-border" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times-circle"></i>
+                    </button>
+
+                    <h2 class="modal-title" id="exampleModalLongTitle">CADASTRO</h2>
+
+
+                </div>
+
+
+                <div class="modal-body">
+                    <i class="fas fa-user " style="padding-right: 5px"></i>
+                    <label for="" class="">NOME</label>
+                    <input type="text" v-model='usuario.nome' class="btn-block input-form " placeholder="Digite seu nome">
+                    <i class="fas fa-envelope" style="padding-right: 5px"></i>
+                    <label for="" class="">EMAIL</label>
+                    <input type="email" v-model='usuario.email' class="btn-block input-form " placeholder="Digite seu email">
+                    <i class="fas fa-unlock" style="padding-right: 5px"></i>
+                    <label for="" class="">SENHA</label>
+                    <input type="password" v-model='usuario.senha' class="btn-block input-form " placeholder="Digite uma senha ">
+                    <i class="fas fa-lock" style="padding-right: 5px"></i>
+                    <label for="" class="">CONFIMAR SENHA</label>
+                    <input type="password" v-model='usuario.confimarSenha' class="btn-block input-form " placeholder="Confime sua senha">
+                </div>
+
+
+                <div class="modal-footer no-border">
+                    <button type="button" class="btn-normal no-border" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn-register btn-normal no-border" @click="salvar()">Registrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        Vue.component('modal', {
+            template: '#modal-template'
+        })
+        var app = new Vue({
+            el: '#app',
+
+
+            data: {
+                titulo: "Cadastro",
+                usuario: {
+                    nome: "",
+                    email: "",
+                    senha: "",
+                    confimarSenha: "",
+                },
+            },
+
+            methods: {
+                salvar() {
+                    if(app.usuario.senha !== app.usuario.confimarSenha) {
+                        alert("Both passwords must be equal");
+                    }
+                    else {
+                        if(app.validateString(app.usuario.nome) && app.validateString(app.usuario.email) && app.validateString(app.usuario.senha)) {
+                            $.ajax({
+                                url: '/api/user',
+                                type: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    email: app.usuario.email,
+                                    name: app.usuario.nome,
+                                    password: app.usuario.senha
+                                },
+                                statusCode: {
+                                    200: function(response) {
+                                        alert("Success!");
+                                    },
+                                    400: function(response) {
+                                        alert("Email already in use!");
+                                    },
+                                    500: function(response) {
+                                        alert("Internal error!");
+                                    }
+                                }
+                            });
+                        }
+                        else {
+                            alert("All fields are required");
+                        }
+                    }
+                },
+                login() {
+                    if(app.validateString(app.usuario.email) && app.validateString(app.usuario.senha)) {
+                        $.ajax({
+                            url: '/api/user/auth',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                email: app.usuario.email,
+                                password: app.usuario.senha
+                            },
+                            statusCode: {
+                                200: function(response) {
+                                    alert("Success!");
+                                },
+                                401: function(response) {
+                                    alert("Wrong credentials!");
+                                },
+                                500: function(response) {
+                                    alert("Internal error!");
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        alert("Invalid email or password");
+                    }
+                },
+                validateString(string) {
+                    if(typeof string !== 'string') {
+                        return false;
+                    }
+                    else if(string.trim() === "") {
+                        return false;
+                    }
+                    return true;
+                }
+            },
+        })    
+    </script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -12,6 +12,8 @@ module.exports = (app, dirname) => {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
+    app.use('/', express.static(`${__dirname}/../client/`));
+
     app.use(async (req, res, next) => {
         req.connection = await db({
             connectionString: process.env.DATABASE_URL,
